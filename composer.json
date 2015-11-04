@@ -23,9 +23,17 @@
         "zendframework/zend-filter": "^2.5",
         "ezyang/htmlpurifier": ">=4.5.0"
     },
+    "require-dev": {
+        "zendframework/zend-servicemanager": "^2.5",
+        "zendframework/zend-view": "^2.5",
+        "zendframework/zend-modulemanager": "^2.5",
+        "phpunit/phpunit": "^4.8",
+        "php-vfs/php-vfs": "^1.3"
+    },
     "suggest": {
         "zendframework/zend-servicemanager": "For creating the filter with the SM factory",
-        "zendframework/zend-view": "For using the purifier as view helper"
+        "zendframework/zend-view": "For using the purifier as view helper",
+        "zendframework/zend-modulemanager": "To load the filter as a module in a ZF2 application"
     },
     "autoload": {
         "psr-0": {

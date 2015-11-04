@@ -9,6 +9,7 @@ namespace Soflomo\Purifier\Test\Factory;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use Soflomo\Purifier\Factory\HtmlPurifierFactory;
+use VirtualFileSystem\FileSystem;
 use Zend\ServiceManager\ServiceManager;
 
 class HtmlPurifierFactoryTest extends TestCase
@@ -21,22 +22,12 @@ class HtmlPurifierFactoryTest extends TestCase
     /**
      * @var ServiceManager
      */
-    protected $serviceLocator;
-
-    /**
-     * @var string
-     */
-    protected $cacheDir;
+    protected $serviceManager;
 
     protected function setUp()
     {
         $this->factory        = new HtmlPurifierFactory();
-        $this->serviceLocator = new ServiceManager();
-        $this->cacheDir       = './tests/_files/cache';
-
-        if (! is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0777, true);
-        }
+        $this->serviceManager = new ServiceManager();
     }
 
     public function testStandaloneFileInclusion()
@@ -48,7 +39,7 @@ class HtmlPurifierFactoryTest extends TestCase
             )
         ));
 
-        $this->factory->createService($this->serviceLocator);
+        $this->factory->createService($this->serviceManager);
 
         $this->assertTrue(class_exists('StandaloneMock', false));
     }
@@ -63,7 +54,7 @@ class HtmlPurifierFactoryTest extends TestCase
         ));
 
         $this->setExpectedException('RuntimeException', 'Could not find standalone purifier file');
-        $this->factory->createService($this->serviceLocator);
+        $this->factory->createService($this->serviceManager);
     }
 
     public function testFactoryCanSetDefinitions()
@@ -86,7 +77,7 @@ class HtmlPurifierFactoryTest extends TestCase
         ));
 
         /** @var \HTMLPurifier $purifier */
-        $purifier = $this->factory->createService($this->serviceLocator);
+        $purifier = $this->factory->createService($this->serviceManager);
 
         /** @var \HTMLPurifier_HTMLDefinition $definition */
         $definition = $purifier->config->getDefinition('HTML');
@@ -107,12 +98,16 @@ class HtmlPurifierFactoryTest extends TestCase
 
     public function testDefinitionCache()
     {
+        $fileSystem = new FileSystem();
+        $cacheDir   = $fileSystem->path('cache');
+        mkdir($cacheDir);
+
         $this->setConfigService(array(
             'soflomo_purifier' => array(
                 'standalone' => false,
                 'config' => array(
                     'HTML.DefinitionID' => 'custom definitions',
-                    'Cache.SerializerPath' => $this->cacheDir
+                    'Cache.SerializerPath' => $cacheDir
                 ),
                 'definitions' => array(
                     'HTML' => array(
@@ -123,30 +118,31 @@ class HtmlPurifierFactoryTest extends TestCase
         ));
 
         // create the purifier and get the definition a first time to warm up the cache
-        $purifier = $this->factory->createService($this->serviceLocator);
+        $purifier = $this->factory->createService($this->serviceManager);
         $purifier->config->getDefinition('HTML');
 
-        $this->assertTrue(is_dir($this->cacheDir . '/HTML'));
-        $cacheFiles = glob($this->cacheDir . '/HTML/*');
-        $this->assertGreaterThan(0, count($cacheFiles));
+        $this->assertTrue(is_dir($cacheDir . '/HTML'));
 
-        // now repeat
+        $cacheFilesNum = 0;
+        $cacheDirHandle = opendir($cacheDir);
+        while(readdir($cacheDirHandle) !== false) {
+            $cacheFilesNum++;
+        }
+        $this->assertGreaterThan(0, $cacheFilesNum);
+
+        // now repeat leaving out the definition config
+        $this->serviceManager = new ServiceManager();
         $this->setConfigService(array(
             'soflomo_purifier' => array(
                 'standalone' => false,
                 'config' => array(
                     'HTML.DefinitionID' => 'custom definitions',
-                    'Cache.SerializerPath' => $this->cacheDir
-                ),
-                'definitions' => array(
-                    'HTML' => array(
-                        'addAttribute' => array('a', 'foo', new \HTMLPurifier_AttrDef_Enum(array('asd'))),
-                    ),
+                    'Cache.SerializerPath' => $cacheDir
                 ),
             )
-        ), true);
+        ));
 
-        $purifier = $this->factory->createService($this->serviceLocator);
+        $purifier = $this->factory->createService($this->serviceManager);
 
         /** @var \HTMLPurifier_HTMLDefinition $definition */
         $definition = $purifier->config->getDefinition('HTML');
@@ -161,38 +157,8 @@ class HtmlPurifierFactoryTest extends TestCase
         $this->assertInstanceOf('HTMLPurifier_AttrDef_Enum', $attributeDefinition);
     }
 
-    protected function tearDown()
+    protected function setConfigService($array)
     {
-        $this->recursiveRmDir($this->cacheDir);
-    }
-
-
-    protected function setConfigService($array, $reset = false)
-    {
-        if ($reset) {
-            $this->serviceLocator = new ServiceManager();
-        }
-        $this->serviceLocator->setService('config', $array);
-    }
-
-    protected function recursiveRmDir($path)
-    {
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
-        if (! is_dir($path)) {
-            return;
-        }
-
-        $children = glob($path . '*');
-
-        foreach ($children as $child) {
-            if (is_dir($child)) {
-                $this->recursiveRmDir($child);
-                continue;
-            }
-            unlink($child);
-        }
-
-        rmdir($path);
+        $this->serviceManager->setService('config', $array);
     }
 }
