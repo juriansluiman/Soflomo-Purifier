@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3.",
+        "php": ">=5.5",
         "zendframework/zend-filter": "^2.5",
         "ezyang/htmlpurifier": ">=4.5.0"
     },
