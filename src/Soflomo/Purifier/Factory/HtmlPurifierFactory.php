@@ -54,9 +54,9 @@ class HtmlPurifierFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $sl)
     {
         $configService = $sl->get('config');
-        $moduleConfig  = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : array();
-        $config        = isset($moduleConfig['config']) ? $moduleConfig['config'] : array();
-        $definitions   = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : array();
+        $moduleConfig  = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : [];
+        $config        = isset($moduleConfig['config']) ? $moduleConfig['config'] : [];
+        $definitions   = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [];
 
         if ($moduleConfig['standalone']) {
             if (! file_exists($moduleConfig['standalone_path'])) {
@@ -81,7 +81,7 @@ class HtmlPurifierFactory implements FactoryInterface
             }
 
             foreach ($methods as $method => $args) {
-                call_user_func_array(array($definition, $method), $args);
+                call_user_func_array([ $definition, $method ], $args);
             }
         }
 

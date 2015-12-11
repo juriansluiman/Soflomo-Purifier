@@ -41,10 +41,10 @@
 namespace Soflomo\Purifier;
 
 return array(
-    'soflomo_purifier' => array(
+    'soflomo_purifier' => [
         'standalone'      => false,
         'standalone_path' => 'vendor/ezyang/htmlpurifier/library/HTMLPurifier.standalone.php',
-        'config'          => array(),
-        'definitions'     => array(),
-    ),
+        'config'          => [ ],
+        'definitions'     => [ ],
+    ],
 );

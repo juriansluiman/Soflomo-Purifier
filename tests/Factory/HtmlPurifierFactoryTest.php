@@ -32,12 +32,12 @@ class HtmlPurifierFactoryTest extends TestCase
 
     public function testStandaloneFileInclusion()
     {
-        $this->setConfigService(array(
-            'soflomo_purifier' => array(
+        $this->setConfigService([
+            'soflomo_purifier' => [
                 'standalone' => true,
                 'standalone_path' => './tests/_files/standalone_mock.php',
-            )
-        ));
+            ]
+        ]);
 
         $this->factory->createService($this->serviceManager);
 
@@ -46,12 +46,12 @@ class HtmlPurifierFactoryTest extends TestCase
 
     public function testFactoryThrowsExceptionIfStandaloneFileNotFound()
     {
-        $this->setConfigService(array(
-            'soflomo_purifier' => array(
+        $this->setConfigService([
+            'soflomo_purifier' => [
                 'standalone' => true,
                 'standalone_path' => 'bogus',
-            )
-        ));
+            ]
+        ]);
 
         $this->setExpectedException('RuntimeException', 'Could not find standalone purifier file');
         $this->factory->createService($this->serviceManager);
@@ -59,22 +59,22 @@ class HtmlPurifierFactoryTest extends TestCase
 
     public function testFactoryCanSetDefinitions()
     {
-        $validAttributes= array('foo','bar','baz','bat');
+        $validAttributes= ['foo','bar','baz','bat'];
 
-        $this->setConfigService(array(
-            'soflomo_purifier' => array(
+        $this->setConfigService([
+            'soflomo_purifier' => [
                 'standalone' => false,
-                'config' => array(
+                'config' => [
                     'HTML.DefinitionID' => 'custom definitions',
                     'Cache.DefinitionImpl' => null,
-                ),
-                'definitions' => array(
-                    'HTML' => array(
-                        'addAttribute' => array('a', 'foo', new \HTMLPurifier_AttrDef_Enum($validAttributes)),
-                    ),
-                ),
-            )
-        ));
+                ],
+                'definitions' => [
+                    'HTML' => [
+                        'addAttribute' => ['a', 'foo', new \HTMLPurifier_AttrDef_Enum($validAttributes)],
+                    ],
+                ],
+            ]
+        ]);
 
         /** @var \HTMLPurifier $purifier */
         $purifier = $this->factory->createService($this->serviceManager);
@@ -102,20 +102,20 @@ class HtmlPurifierFactoryTest extends TestCase
         $cacheDir   = $fileSystem->path('cache');
         mkdir($cacheDir);
 
-        $this->setConfigService(array(
-            'soflomo_purifier' => array(
+        $this->setConfigService([
+            'soflomo_purifier' => [
                 'standalone' => false,
-                'config' => array(
+                'config' => [
                     'HTML.DefinitionID' => 'custom definitions',
                     'Cache.SerializerPath' => $cacheDir
-                ),
-                'definitions' => array(
-                    'HTML' => array(
-                        'addAttribute' => array('a', 'foo', new \HTMLPurifier_AttrDef_Enum(array('asd'))),
-                    ),
-                ),
-            )
-        ));
+                ],
+                'definitions' => [
+                    'HTML' => [
+                        'addAttribute' => ['a', 'foo', new \HTMLPurifier_AttrDef_Enum(['asd'])],
+                    ],
+                ],
+            ]
+        ]);
 
         // create the purifier and get the definition a first time to warm up the cache
         $purifier = $this->factory->createService($this->serviceManager);
@@ -132,15 +132,15 @@ class HtmlPurifierFactoryTest extends TestCase
 
         // now repeat leaving out the definition config
         $this->serviceManager = new ServiceManager();
-        $this->setConfigService(array(
-            'soflomo_purifier' => array(
+        $this->setConfigService([
+            'soflomo_purifier' => [
                 'standalone' => false,
-                'config' => array(
+                'config' => [
                     'HTML.DefinitionID' => 'custom definitions',
                     'Cache.SerializerPath' => $cacheDir
-                ),
-            )
-        ));
+                ],
+            ]
+        ]);
 
         $purifier = $this->factory->createService($this->serviceManager);
 
