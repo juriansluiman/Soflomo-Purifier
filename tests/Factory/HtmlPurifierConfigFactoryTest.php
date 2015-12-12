@@ -71,10 +71,10 @@ class HtmlPurifierConfigFactoryTest extends TestCase
                 'config' => [
                     'HTML.DefinitionID' => 'custom definitions',
                     'Cache.DefinitionImpl' => null,
-                ],
-                'definitions' => [
-                    'HTML' => [
-                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes)],
+                    'definitions' => [
+                        'HTML' => [
+                            'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes)],
+                        ],
                     ],
                 ],
             ]
@@ -95,7 +95,7 @@ class HtmlPurifierConfigFactoryTest extends TestCase
         $attributeDefinition = $elementDefinition->attr['foo'];
         $this->assertInstanceOf('HTMLPurifier_AttrDef_Enum', $attributeDefinition);
 
-        foreach($validAttributes as $value) {
+        foreach ($validAttributes as $value) {
             $this->assertArrayHasKey($value, $attributeDefinition->valid_values);
         }
     }
@@ -111,11 +111,11 @@ class HtmlPurifierConfigFactoryTest extends TestCase
                 'standalone' => false,
                 'config' => [
                     'HTML.DefinitionID' => 'custom definitions',
-                    'Cache.SerializerPath' => $cacheDir
-                ],
-                'definitions' => [
-                    'HTML' => [
-                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum(['asd'])],
+                    'Cache.SerializerPath' => $cacheDir,
+                    'definitions' => [
+                        'HTML' => [
+                            'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum(['asd'])],
+                        ],
                     ],
                 ],
             ]
@@ -129,7 +129,7 @@ class HtmlPurifierConfigFactoryTest extends TestCase
 
         $cacheFilesNum = 0;
         $cacheDirHandle = opendir($cacheDir);
-        while(readdir($cacheDirHandle) !== false) {
+        while (readdir($cacheDirHandle) !== false) {
             $cacheFilesNum++;
         }
         $this->assertGreaterThan(0, $cacheFilesNum);

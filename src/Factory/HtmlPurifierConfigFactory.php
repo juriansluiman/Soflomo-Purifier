@@ -17,8 +17,6 @@ class HtmlPurifierConfigFactory
     {
         $configService = $serviceLocator->get('config');
         $moduleConfig  = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : [];
-        $config        = isset($moduleConfig['config']) ? $moduleConfig['config'] : [];
-        $definitions   = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [];
 
         if ($moduleConfig['standalone']) {
             if (! file_exists($moduleConfig['standalone_path'])) {
@@ -28,7 +26,28 @@ class HtmlPurifierConfigFactory
             include_once $moduleConfig['standalone_path'];
         }
 
+        $config = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
+        $purifierConfig = self::createConfig($config);
+
+        return $purifierConfig;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return HTMLPurifier_Config
+     * @throws \HTMLPurifier_Exception
+     */
+    public static function createConfig(array $config)
+    {
         $purifierConfig = HTMLPurifier_Config::createDefault();
+
+        if (isset($config['definitions'])) {
+            $definitions  = $config['definitions'];
+            unset($config['definitions']);
+        } else {
+            $definitions = [];
+        }
 
         foreach ($config as $key => $value) {
             $purifierConfig->set($key, $value);

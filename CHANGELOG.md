@@ -15,8 +15,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - **[BC-BREAK]** Bumped minimum PHP version to 5.5 (as required by zend-filter)
 - **[BC-BREAK]** Removed zendframework monolithic dependency and bumped zend-filter minimum version to 2.5 ([#5](https://github.com/Soflomo/Purifier/pull/5), [#6](https://github.com/Soflomo/Purifier/pull/6))
 
-### Deprecated
+### Removed
 - Loading the module via `Zend\Loader` is no longer possible. Composer autoloader is now required.
+
 
 ## 0.1.1 2013-04-23
 

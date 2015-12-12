@@ -105,7 +105,7 @@ return [
 ];
 ```
 
-The module configuration also accepts a `definitions` array to add custom definitions to the purifier, as [documented here](http://htmlpurifier.org/docs/enduser-customize.html).
+The configuration factory also handles a `definitions` sub array to add custom definitions to the purifier, as [documented here](http://htmlpurifier.org/docs/enduser-customize.html).
 
 For example:
 
@@ -114,11 +114,11 @@ return [
     'soflomo_purifier' => [
         'config' => [
             'HTML.DefinitionID' => 'my custom definitions',
-        ],
-        'definitions' => [
-            'HTML' => [
-                'addAttribute' => [
-                    'a', 'target', 'Enum#_blank,_self,_target,_top'
+            'definitions' => [
+                'HTML' => [
+                    'addAttribute' => [
+                        'a', 'target', 'Enum#_blank,_self,_target,_top'
+                    ],
                 ],
             ],
         ],
