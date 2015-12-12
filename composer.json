@@ -28,7 +28,13 @@
         "zendframework/zend-view": "^2.5",
         "zendframework/zend-modulemanager": "^2.5",
         "phpunit/phpunit": "^4.8",
-        "php-vfs/php-vfs": "^1.3"
+        "php-vfs/php-vfs": "^1.3",
+        "zendframework/zend-mvc": "^2.5",
+        "zendframework/zend-serializer": "^2.5",
+        "zendframework/zend-log": "^2.6",
+        "zendframework/zend-i18n": "^2.5",
+        "zendframework/zend-console": "^2.5",
+        "zendframework/zend-http": "^2.5"
     },
     "suggest": {
         "zendframework/zend-servicemanager": "For creating the filter with the SM factory",
@@ -36,12 +42,9 @@
         "zendframework/zend-modulemanager": "To load the filter as a module in a ZF2 application"
     },
     "autoload": {
-        "psr-0": {
-            "Soflomo\\Purifier": "src/"
-        },
-        "classmap": [
-            "./Module.php"
-        ]
+        "psr-4": {
+            "Soflomo\\Purifier\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {

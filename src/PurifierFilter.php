@@ -1,12 +1,17 @@
 <?php
 
-namespace Soflomo\Purifier\Filter;
+namespace Soflomo\Purifier;
 
 use HTMLPurifier;
 use Zend\Filter\FilterInterface;
 
-class Purifier implements FilterInterface
+class PurifierFilter implements FilterInterface
 {
+    const ALIAS = 'htmlpurifier';
+
+    /**
+     * @var HTMLPurifier
+     */
     protected $purifier;
 
     public function __construct(HTMLPurifier $purifier)
@@ -14,16 +19,11 @@ class Purifier implements FilterInterface
         $this->purifier = $purifier;
     }
 
-    protected function getPurifier()
-    {
-        return $this->purifier;
-    }
-
     /**
      * {@inheritdocs}
      */
     public function filter($value)
     {
-        return $this->getPurifier()->purify($value);
+        return $this->purifier->purify($value);
     }
 }

@@ -38,36 +38,14 @@
  * @link        http://soflomo.com
  */
 
-namespace Soflomo\Purifier\View\Helper;
+namespace Soflomo\Purifier;
 
-use HTMLPurifier;
-use Zend\View\Helper\AbstractHelper;
+use Zend\ModuleManager\Feature;
 
-class Purifier extends AbstractHelper
+class Module implements Feature\ConfigProviderInterface
 {
-    protected $purifier;
-
-    public function __construct(HTMLPurifier $purifier)
+    public function getConfig()
     {
-        $this->purifier = $purifier;
-    }
-
-    protected function getPurifier()
-    {
-        return $this->purifier;
-    }
-
-    public function __invoke($html = null)
-    {
-        if (null === $html) {
-            return $this;
-        }
-
-        return $this->purify($html);
-    }
-
-    public function purify($html)
-    {
-        return $this->getPurifier()->purify($html);
+        return include __DIR__ . '/../config/module.config.php';
     }
 }

@@ -40,62 +40,34 @@
 
 namespace Soflomo\Purifier;
 
-use Zend\Loader;
-use Zend\ModuleManager\Feature;
+use HTMLPurifier;
+use Zend\View\Helper\AbstractHelper;
 
-class Module implements
-    Feature\AutoloaderProviderInterface,
-    Feature\ConfigProviderInterface,
-    Feature\ServiceProviderInterface,
-    Feature\FilterProviderInterface,
-    Feature\ViewHelperProviderInterface
+class PurifierViewHelper extends AbstractHelper
 {
-    public function getAutoloaderConfig()
+    const ALIAS = 'htmlPurifier';
+
+    /**
+     * @var HTMLPurifier
+     */
+    protected $purifier;
+
+    public function __construct(HTMLPurifier $purifier)
     {
-        return array(
-            Loader\AutoloaderFactory::STANDARD_AUTOLOADER => array(
-                Loader\StandardAutoloader::LOAD_NS => array(
-                    __NAMESPACE__ => __DIR__ . '/src/Soflomo/Purifier',
-                ),
-            ),
-        );
+        $this->purifier = $purifier;
     }
 
-    public function getConfig()
+    public function __invoke($html = null)
     {
-        return include __DIR__ . '/config/module.config.php';
+        if (null === $html) {
+            return $this;
+        }
+
+        return $this->purify($html);
     }
 
-    public function getServiceConfig()
+    public function purify($html)
     {
-        return array(
-            'factories' => array(
-                'HTMLPurifier' => 'Soflomo\Purifier\Factory\HtmlPurifierFactory',
-            ),
-        );
-    }
-
-    public function getFilterConfig()
-    {
-        return array(
-            'factories' => array(
-                'htmlpurifier' => function($sl) {
-                    $purifier = $sl->getServiceLocator()->get('HTMLPurifier');
-                    return new Filter\Purifier($purifier);
-                },
-            ),
-        );
-    }
-
-    public function getViewHelperConfig()
-    {
-        return array(
-            'factories' => array(
-                'htmlPurifier' => function($sl) {
-                    $purifier = $sl->getServiceLocator()->get('HTMLPurifier');
-                    return new View\Helper\Purifier($purifier);
-                },
-            ),
-        );
+        return $this->purifier->purify($html);
     }
 }

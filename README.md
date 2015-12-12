@@ -72,6 +72,8 @@ class MyInputFilter extends Zend\InputFilter\InputFilter
 }
 ```
 
+Alternatively, you can use the FQCN `Soflomo\Purifier\PurifierFilter` in place of the `htmlpurifier` alias.
+
 If your pulling the consumers from their respective plugin managers, this should work out-of-the-box.
 If not, please read [how to inject the filter plugin manager](#injecting-the-filtermanager).
 

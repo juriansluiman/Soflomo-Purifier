@@ -47,4 +47,28 @@ return array(
         'config'          => [ ],
         'definitions'     => [ ],
     ],
+
+    'service_manager' => [
+        'factories' => [
+            'HTMLPurifier' => Factory\HtmlPurifierFactory::class,
+        ],
+    ],
+
+    'filters' => [
+        'factories' => [
+            PurifierFilter::class => Factory\PurifierFilterFactory::class,
+        ],
+        'aliases' => [
+            PurifierFilter::ALIAS => PurifierFilter::class,
+        ],
+    ],
+
+    'view_helpers' => [
+        'factories' => [
+            PurifierViewHelper::class => Factory\PurifierViewHelperFactory::class,
+        ],
+        'aliases' => [
+            PurifierViewHelper::ALIAS => PurifierViewHelper::class,
+        ],
+    ],
 );
