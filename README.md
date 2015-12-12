@@ -74,7 +74,7 @@ class MyInputFilter extends Zend\InputFilter\InputFilter
 
 Alternatively, you can use the FQCN `Soflomo\Purifier\PurifierFilter` in place of the `htmlpurifier` alias.
 
-If your pulling the consumers from their respective plugin managers, this should work out-of-the-box.
+If you're pulling the consumers from their respective plugin managers, this should work out-of-the-box.
 If not, please read [how to inject the filter plugin manager](#injecting-the-filtermanager).
 
 If for some reason you want to use the filter in your view templates, you also have a view helper available.
@@ -163,9 +163,9 @@ class MyInputFilter extends Zend\InputFilter\InputFilter
 
 ### Injecting the FilterManager
 
-If you instantiate your forms or your input filters manually with the `new` keyword rather than pulling them from their respective plugin managers (i.e. `FormElementManager` and `InputFilterManager`), the `FilterManager` is not injected automatically into their factories, and these will resort to using a default one.
+If you instantiate your forms or your input filters manually with the `new` keyword, rather than pulling them from their respective plugin managers (i.e. `FormElementManager` and `InputFilterManager`), the `FilterManager` is not injected automatically into their factories, and these will resort to use a default one.
 
-As such, you get a `ServiceNotFoundException: "Zend\Filter\FilterPluginManager::get was unable to fetch or create an instance for htmlpurifier"`. This means the filter plugin manager was lazily instantiated, and does not know about the `htmlpurifier` plugin.
+As such, you get a `ServiceNotFoundException: Zend\Filter\FilterPluginManager::get was unable to fetch or create an instance for htmlpurifier`. This means the filter plugin manager was lazily instantiated, and does not know about the `htmlpurifier` plugin.
 
 You can hack your way through this by executing the initializers manually:
 
