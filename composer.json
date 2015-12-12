@@ -1,6 +1,6 @@
 {
     "name": "soflomo/purifier",
-    "description": "HTML Purifier as filter and view helper for Zend Framework 2 ",
+    "description": "HTML Purifier integration module for Zend Framework 2 ",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [

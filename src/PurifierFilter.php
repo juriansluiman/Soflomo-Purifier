@@ -3,9 +3,12 @@
 namespace Soflomo\Purifier;
 
 use HTMLPurifier;
+use Soflomo\Purifier\Factory\HtmlPurifierConfigFactory;
+use Traversable;
+use Zend\Filter\AbstractFilter;
 use Zend\Filter\FilterInterface;
 
-class PurifierFilter implements FilterInterface
+class PurifierFilter extends AbstractFilter implements FilterInterface
 {
     const ALIAS = 'htmlpurifier';
 
@@ -14,9 +17,26 @@ class PurifierFilter implements FilterInterface
      */
     protected $purifier;
 
-    public function __construct(HTMLPurifier $purifier)
+    /**
+     * @var array
+     */
+    protected $options = [
+        'purifier_config' => [],
+    ];
+
+    /**
+     * PurifierFilter constructor.
+     *
+     * @param HTMLPurifier      $purifier
+     * @param array|Traversable $options
+     */
+    public function __construct(HTMLPurifier $purifier, $options = [])
     {
         $this->purifier = $purifier;
+
+        if (! empty($options)) {
+            $this->setOptions($options);
+        }
     }
 
     /**
@@ -24,6 +44,30 @@ class PurifierFilter implements FilterInterface
      */
     public function filter($value)
     {
-        return $this->purifier->purify($value);
+        $configArray = $this->getPurifierConfig();
+
+        if (empty($configArray)) {
+            return $this->purifier->purify($value);
+        }
+
+        $purifierConfig = HtmlPurifierConfigFactory::createConfig($configArray);
+
+        return $this->purifier->purify($value, $purifierConfig);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPurifierConfig()
+    {
+        return $this->options['purifier_config'];
+    }
+
+    /**
+     * @param array $config
+     */
+    public function setPurifierConfig(array $config)
+    {
+        $this->options['purifier_config'] = $config;
     }
 }

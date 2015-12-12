@@ -11,6 +11,7 @@ use HTMLPurifier;
 use HTMLPurifier_Config;
 use PHPUnit_Framework_TestCase as TestCase;
 use Soflomo\Purifier;
+use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Application;
 use Zend\ServiceManager\ServiceManager;
 
@@ -81,5 +82,32 @@ class ModuleIntegrationTest extends TestCase
 
         $this->assertInstanceOf(Purifier\PurifierViewHelper::class, $purifierViewHelper);
         $this->assertEquals($purifierViewHelper, $viewHelperManager->get(Purifier\PurifierViewHelper::ALIAS));
+    }
+
+    public function testFilterConfigCanBeInitializedByZendInputFilterFactory()
+    {
+        $app = Application::init($this->appConfig);
+        $inputFilter = new InputFilter();
+        $app->getServiceManager()->get('InputFilterManager')->populateFactory($inputFilter);
+
+        $config = [ 'HTML.AllowedElements' => 'a' ];
+
+        $inputFilter->add([
+            'name' => 'test',
+            'filters' => [
+                [
+                    'name' => 'htmlpurifier',
+                    'options' => [
+                        'purifier_config' => $config
+                    ]
+                ],
+            ]
+        ]);
+
+        /** @var Purifier\PurifierFilter $filter */
+        $filter = $inputFilter->get('test')->getFilterChain()->getFilters()->top();
+
+        $this->assertInstanceOf(Purifier\PurifierFilter::class, $filter);
+        $this->assertEquals($config, $filter->getPurifierConfig());
     }
 }

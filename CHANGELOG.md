@@ -5,8 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 ### Added
-- Support for HTMLPurifier custom definitions ([#1](https://github.com/juriansluiman/Soflomo-Purifier/pull/1))
+- Add the ability to configure HTMLPurifier via filter options ([#3](https://github.com/Soflomo/Purifier/pull/3/))
 - The default `HTMLPurifier_Config` instance is now available as a service via its FQCN.
+- Support for HTMLPurifier custom definitions ([#1](https://github.com/juriansluiman/Soflomo-Purifier/pull/1))
 
 ### Changed
 - Updated the docs in README.md

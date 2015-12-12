@@ -93,7 +93,11 @@ And there is a shorthand available too:
 
 ### Configuring HTMLPurifier
 
-HTMLPurifier use the class `HTMLPurifier_Config` to configure its rules. Most configuration rules are based on a key/value pair: `$config->set('HTML.Doctype', 'HTML 4.01 Transitional')`. This API is exposed by **Soflomo\Purifier** as an associative array into the ZF2 configuration, so you can customize the default `HTMLPurifier_Config` instance like this:
+HTMLPurifier use the class `HTMLPurifier_Config` to configure its rules. Most configuration rules are based on a key/value pair: `$config->set('HTML.Doctype', 'HTML 4.01 Transitional')`.
+
+#### Global configuration
+
+The `HTMLPurifier_Config` key/value storege is exposed by **Soflomo\Purifier** as an associative array into the ZF2 configuration, so you can customize the default `HTMLPurifier_Config` instance like this:
 
 ```php
 return [
@@ -129,6 +133,33 @@ return [
 This will add a `HTMLPurifier_AttrDef_Enum` definition for the `target` attribute of the `a` element.
 Note that an arbitrary value for the `HTML.DefinitionID` config key is required to correctly load the definition.
 
+#### Per-instance configuration
+
+You can also set a different configuration each time you add the filter with a spec using the usual `options` key:
+
+```php
+class MyInputFilter extends Zend\InputFilter\InputFilter
+{
+    public function init()
+    {
+        $this->add([
+            'name'     => 'text',
+            'required' => true,
+            'filters'  => [
+                [ 'name' => 'stringtrim' ],
+                [
+                    'name' => 'htmlpurifier',
+                    'options' => [
+                        'purifier_config' => [
+                            'HTML.AllowedElements' => 'a, span'
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+}
+```
 
 ### Injecting the FilterManager
 
@@ -136,17 +167,17 @@ If you instantiate your forms or your input filters manually with the `new` keyw
 
 As such, you get a `ServiceNotFoundException: "Zend\Filter\FilterPluginManager::get was unable to fetch or create an instance for htmlpurifier"`. This means the filter plugin manager was lazily instantiated, and does not know about the `htmlpurifier` plugin.
 
-You can hack your way through this by grabbing the filter plugin manager from the Service Manager and injecting it manually via setters:
+You can hack your way through this by executing the initializers manually:
 
 ```php
-$filters = $serviceManager->get('FilterManager');
-
 $form = new MyForm();
-$form->getFormFactory()->getInputFilterFactory()->getDefaultFilterChain()->setPluginManager($filters);
+$formElementManager = $serviceManager->get('FormElementManager');
+$formElementManager->injectFactory($form);
 
 // same goes for input filters
 $inputFilter = new MyInputFilter();
-$inputFilter->getFactory()->getDefaultFilterChain()->setPluginManager($filters);
+$inputFilterManager = $serviceManager->get('InputFilterManager');
+$inputFilterManager->populateFactory($inputFilter);
 ```
 
 It is however strongly advised to pull forms and input filters from their respective plugin managers, and use the `init()` method (which will be invoked after all the factories are injected) when applicable.
