@@ -7,6 +7,8 @@
 
 namespace Soflomo\Purifier\Test;
 
+use HTMLPurifier;
+use HTMLPurifier_Config;
 use PHPUnit_Framework_TestCase as TestCase;
 use Soflomo\Purifier;
 use Zend\Mvc\Application;
@@ -36,6 +38,21 @@ class ModuleIntegrationTest extends TestCase
         $loadedModules = $app->getServiceManager()->get('ModuleManager')->getLoadedModules();
         $this->assertArrayHasKey('Soflomo\Purifier', $loadedModules);
         $this->assertInstanceOf(Purifier\Module::class, $loadedModules['Soflomo\Purifier']);
+    }
+
+    public function testServicesAreRegistered()
+    {
+        $app = Application::init($this->appConfig);
+        $serviceManager = $app->getServiceManager();
+
+        $this->assertTrue($serviceManager->has(HTMLPurifier_Config::class));
+        $this->assertTrue($serviceManager->has(HTMLPurifier::class));
+
+        $htmlPurifierConfig = $serviceManager->get(HTMLPurifier_Config::class);
+        $this->assertInstanceOf(HTMLPurifier_Config::class, $htmlPurifierConfig);
+
+        $htmlPurifier = $serviceManager->get(HTMLPurifier::class);
+        $this->assertInstanceOf(HTMLPurifier::class, $htmlPurifier);
     }
 
     public function testFilterIsRegistered()

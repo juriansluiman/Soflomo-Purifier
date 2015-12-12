@@ -7,15 +7,19 @@
 
 namespace Soflomo\Purifier\Test\Factory;
 
+use HTMLPurifier_AttrDef_Enum;
+use HTMLPurifier_Config;
+use HTMLPurifier_ElementDef;
+use HTMLPurifier_HTMLDefinition;
 use PHPUnit_Framework_TestCase as TestCase;
-use Soflomo\Purifier\Factory\HtmlPurifierFactory;
+use Soflomo\Purifier\Factory\HtmlPurifierConfigFactory;
 use VirtualFileSystem\FileSystem;
 use Zend\ServiceManager\ServiceManager;
 
-class HtmlPurifierFactoryTest extends TestCase
+class HtmlPurifierConfigFactoryTest extends TestCase
 {
     /**
-     * @var HtmlPurifierFactory
+     * @var HtmlPurifierConfigFactory
      */
     protected $factory;
 
@@ -26,7 +30,7 @@ class HtmlPurifierFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->factory        = new HtmlPurifierFactory();
+        $this->factory        = new HtmlPurifierConfigFactory();
         $this->serviceManager = new ServiceManager();
     }
 
@@ -39,7 +43,7 @@ class HtmlPurifierFactoryTest extends TestCase
             ]
         ]);
 
-        $this->factory->createService($this->serviceManager);
+        $this->factory->__invoke($this->serviceManager);
 
         $this->assertTrue(class_exists('StandaloneMock', false));
     }
@@ -54,7 +58,7 @@ class HtmlPurifierFactoryTest extends TestCase
         ]);
 
         $this->setExpectedException('RuntimeException', 'Could not find standalone purifier file');
-        $this->factory->createService($this->serviceManager);
+        $this->factory->__invoke($this->serviceManager);
     }
 
     public function testFactoryCanSetDefinitions()
@@ -70,24 +74,24 @@ class HtmlPurifierFactoryTest extends TestCase
                 ],
                 'definitions' => [
                     'HTML' => [
-                        'addAttribute' => ['a', 'foo', new \HTMLPurifier_AttrDef_Enum($validAttributes)],
+                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes)],
                     ],
                 ],
             ]
         ]);
 
-        /** @var \HTMLPurifier $purifier */
-        $purifier = $this->factory->createService($this->serviceManager);
+        /** @var HTMLPurifier_Config $purifier */
+        $purifierConfig = $this->factory->__invoke($this->serviceManager);
 
-        /** @var \HTMLPurifier_HTMLDefinition $definition */
-        $definition = $purifier->config->getDefinition('HTML');
+        /** @var HTMLPurifier_HTMLDefinition $definition */
+        $definition = $purifierConfig->getDefinition('HTML');
         $this->assertInstanceOf('HTMLPurifier_HTMLDefinition', $definition);
 
-        /** @var \HTMLPurifier_ElementDef $elementDefinition */
+        /** @var HTMLPurifier_ElementDef $elementDefinition */
         $elementDefinition = $definition->info['a'];
         $this->assertInstanceOf('HTMLPurifier_ElementDef', $elementDefinition);
 
-        /** @var \HTMLPurifier_AttrDef_Enum $attributeDefinition */
+        /** @var HTMLPurifier_AttrDef_Enum $attributeDefinition */
         $attributeDefinition = $elementDefinition->attr['foo'];
         $this->assertInstanceOf('HTMLPurifier_AttrDef_Enum', $attributeDefinition);
 
@@ -111,15 +115,15 @@ class HtmlPurifierFactoryTest extends TestCase
                 ],
                 'definitions' => [
                     'HTML' => [
-                        'addAttribute' => ['a', 'foo', new \HTMLPurifier_AttrDef_Enum(['asd'])],
+                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum(['asd'])],
                     ],
                 ],
             ]
         ]);
 
-        // create the purifier and get the definition a first time to warm up the cache
-        $purifier = $this->factory->createService($this->serviceManager);
-        $purifier->config->getDefinition('HTML');
+        // create the purifier config and get the definition a first time to warm up the cache
+        $purifierConfig = $this->factory->__invoke($this->serviceManager);
+        $purifierConfig->getDefinition('HTML');
 
         $this->assertTrue(is_dir($cacheDir . '/HTML'));
 
@@ -142,17 +146,17 @@ class HtmlPurifierFactoryTest extends TestCase
             ]
         ]);
 
-        $purifier = $this->factory->createService($this->serviceManager);
+        $purifierConfig = $this->factory->__invoke($this->serviceManager);
 
-        /** @var \HTMLPurifier_HTMLDefinition $definition */
-        $definition = $purifier->config->getDefinition('HTML');
+        /** @var HTMLPurifier_HTMLDefinition $definition */
+        $definition = $purifierConfig->getDefinition('HTML');
         $this->assertInstanceOf('HTMLPurifier_HTMLDefinition', $definition);
 
-        /** @var \HTMLPurifier_ElementDef $elementDefinition */
+        /** @var HTMLPurifier_ElementDef $elementDefinition */
         $elementDefinition = $definition->info['a'];
         $this->assertInstanceOf('HTMLPurifier_ElementDef', $elementDefinition);
 
-        /** @var \HTMLPurifier_AttrDef_Enum $attributeDefinition */
+        /** @var HTMLPurifier_AttrDef_Enum $attributeDefinition */
         $attributeDefinition = $elementDefinition->attr['foo'];
         $this->assertInstanceOf('HTMLPurifier_AttrDef_Enum', $attributeDefinition);
     }

@@ -42,50 +42,18 @@ namespace Soflomo\Purifier\Factory;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;
-use RuntimeException;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class HtmlPurifierFactory implements FactoryInterface
+class HtmlPurifierFactory
 {
     /**
      * {@inheritdocs}
      */
-    public function createService(ServiceLocatorInterface $sl)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $configService = $sl->get('config');
-        $moduleConfig  = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : [];
-        $config        = isset($moduleConfig['config']) ? $moduleConfig['config'] : [];
-        $definitions   = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [];
-
-        if ($moduleConfig['standalone']) {
-            if (! file_exists($moduleConfig['standalone_path'])) {
-                throw new RuntimeException('Could not find standalone purifier file');
-            }
-
-            include $moduleConfig['standalone_path'];
-        }
-
-        $purifierConfig = HTMLPurifier_Config::createDefault();
-
-        foreach ($config as $key => $value) {
-            $purifierConfig->set($key, $value);
-        }
-
-        foreach ($definitions as $type => $methods) {
-            $definition = $purifierConfig->getDefinition($type, true, true);
-
-            if (! $definition) {
-                // definition is cached, skip iteration
-                continue;
-            }
-
-            foreach ($methods as $method => $args) {
-                call_user_func_array([ $definition, $method ], $args);
-            }
-        }
-
+        $purifierConfig = $serviceLocator->get(HTMLPurifier_Config::class);
         $purifier = new HTMLPurifier($purifierConfig);
+
         return $purifier;
     }
 }
