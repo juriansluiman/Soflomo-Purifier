@@ -2,7 +2,13 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.0-rc
+## 1.0.0-dev (unreleased)
+
+### Fixed
+- Typo in README.md
+
+
+## 1.0.0-rc 2015-12-12
 
 ### Added
 - Add the ability to configure HTMLPurifier via filter options ([#3](https://github.com/Soflomo/Purifier/pull/3/))
