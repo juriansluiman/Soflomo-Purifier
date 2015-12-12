@@ -14,10 +14,20 @@
     "authors": [
         {
             "name": "Jurian Sluiman",
-            "email": "jurian@soflomo.com",
-            "homepage": "http://soflomo.com"
+            "email": "jurian@juriansluiman.nl",
+            "homepage": "https://juriansluiman.nl"
+        },
+        {
+            "name": "Stefano Torresi",
+            "email": "stefano@torresi.io",
+            "homepage": "https://stefanotorresi.it"
         }
     ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0-dev"
+        }
+    },
     "require": {
         "php": ">=5.5",
         "zendframework/zend-filter": "^2.5",
