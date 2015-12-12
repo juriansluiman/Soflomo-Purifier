@@ -44,7 +44,7 @@ use Zend\ModuleManager\Feature;
 
 class Module implements Feature\ConfigProviderInterface
 {
-    const VERSION = '1.0.0-rc';
+    const VERSION = '1.0.0-dev';
 
     public function getConfig()
     {
