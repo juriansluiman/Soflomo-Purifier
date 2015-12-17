@@ -10,10 +10,7 @@ namespace Soflomo\Purifier\Test;
 use HTMLPurifier;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
-use Soflomo\Purifier\Factory\PurifierFilterFactory;
 use Soflomo\Purifier\PurifierFilter;
-use Zend\InputFilter\Factory;
-use Zend\ServiceManager\ServiceManager;
 
 class PurifierFilterTest extends TestCase
 {
@@ -30,7 +27,7 @@ class PurifierFilterTest extends TestCase
     public function setUp()
     {
         $this->htmlPurifier = new HTMLPurifier();
-        $this->filter = new PurifierFilter($this->htmlPurifier);
+        $this->filter       = new PurifierFilter($this->htmlPurifier);
     }
 
     public function testFilterWithCustomConfig()
@@ -40,7 +37,7 @@ class PurifierFilterTest extends TestCase
         $this->assertSame('<p><a>foobar</a></p>', $this->filter->filter($value));
 
         $this->filter->setPurifierConfig([
-            'HTML.AllowedElements' => 'a'
+            'HTML.AllowedElements' => 'a',
         ]);
 
         $this->assertSame('<a>foobar</a>', $this->filter->filter($value));
@@ -49,7 +46,7 @@ class PurifierFilterTest extends TestCase
     public function testOptionsCanBeInitializedWithConstructor()
     {
         $options = [ 'purifier_config' => [ 'HTML.AllowedElements' => 'a' ] ];
-        $filter = new PurifierFilter($this->htmlPurifier, $options);
+        $filter  = new PurifierFilter($this->htmlPurifier, $options);
         $this->assertEquals($options, $filter->getOptions());
     }
 }

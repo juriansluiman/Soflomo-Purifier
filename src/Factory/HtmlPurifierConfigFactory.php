@@ -26,7 +26,7 @@ class HtmlPurifierConfigFactory
             include_once $moduleConfig['standalone_path'];
         }
 
-        $config = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
+        $config         = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
         $purifierConfig = self::createConfig($config);
 
         return $purifierConfig;
@@ -35,8 +35,9 @@ class HtmlPurifierConfigFactory
     /**
      * @param array $config
      *
-     * @return HTMLPurifier_Config
      * @throws \HTMLPurifier_Exception
+     *
+     * @return HTMLPurifier_Config
      */
     public static function createConfig(array $config)
     {

@@ -25,9 +25,9 @@ class ModuleIntegrationTest extends TestCase
     protected function setUp()
     {
         $this->serviceManager = new ServiceManager();
-        $this->appConfig = [
+        $this->appConfig      = [
             'modules' => [
-                'Soflomo\Purifier'
+                'Soflomo\Purifier',
             ],
             'module_listener_options' => [],
         ];
@@ -35,7 +35,7 @@ class ModuleIntegrationTest extends TestCase
 
     public function testCanLoadModule()
     {
-        $app = Application::init($this->appConfig);
+        $app           = Application::init($this->appConfig);
         $loadedModules = $app->getServiceManager()->get('ModuleManager')->getLoadedModules();
         $this->assertArrayHasKey('Soflomo\Purifier', $loadedModules);
         $this->assertInstanceOf(Purifier\Module::class, $loadedModules['Soflomo\Purifier']);
@@ -43,7 +43,7 @@ class ModuleIntegrationTest extends TestCase
 
     public function testServicesAreRegistered()
     {
-        $app = Application::init($this->appConfig);
+        $app            = Application::init($this->appConfig);
         $serviceManager = $app->getServiceManager();
 
         $this->assertTrue($serviceManager->has(HTMLPurifier_Config::class));
@@ -58,7 +58,7 @@ class ModuleIntegrationTest extends TestCase
 
     public function testFilterIsRegistered()
     {
-        $app = Application::init($this->appConfig);
+        $app           = Application::init($this->appConfig);
         $filterManager = $app->getServiceManager()->get('FilterManager');
 
         $this->assertTrue($filterManager->has(Purifier\PurifierFilter::class));
@@ -72,7 +72,7 @@ class ModuleIntegrationTest extends TestCase
 
     public function testViewHelperIsRegistered()
     {
-        $app = Application::init($this->appConfig);
+        $app               = Application::init($this->appConfig);
         $viewHelperManager = $app->getServiceManager()->get('ViewHelperManager');
 
         $this->assertTrue($viewHelperManager->has(Purifier\PurifierViewHelper::class));
@@ -86,22 +86,22 @@ class ModuleIntegrationTest extends TestCase
 
     public function testFilterConfigCanBeInitializedByZendInputFilterFactory()
     {
-        $app = Application::init($this->appConfig);
+        $app         = Application::init($this->appConfig);
         $inputFilter = new InputFilter();
         $app->getServiceManager()->get('InputFilterManager')->populateFactory($inputFilter);
 
         $config = [ 'HTML.AllowedElements' => 'a' ];
 
         $inputFilter->add([
-            'name' => 'test',
+            'name'    => 'test',
             'filters' => [
                 [
-                    'name' => 'htmlpurifier',
+                    'name'    => 'htmlpurifier',
                     'options' => [
-                        'purifier_config' => $config
-                    ]
+                        'purifier_config' => $config,
+                    ],
                 ],
-            ]
+            ],
         ]);
 
         /** @var Purifier\PurifierFilter $filter */
