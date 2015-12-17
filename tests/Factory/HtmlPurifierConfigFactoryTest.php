@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Stefano Torresi (http://stefanotorresi.it)
  * @license See the file LICENSE for copying permission.
- * ************************************************
  */
 
 namespace Soflomo\Purifier\Test\Factory;
