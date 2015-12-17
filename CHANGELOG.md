@@ -1,14 +1,23 @@
-# CHANGELOG
+# Changelog
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.0-dev (unreleased)
+All notable changes to this project will be documented in this file, in reverse chronological order by release.
+
+## 1.0.0 - 2015-12-17
+
+### Added
+- PHP-CS-Fixer configuration
+- Travis CI configuration
+
+### Changed
+- Minor updates in README.md
 
 ### Fixed
-- Typo in README.md
+- Coding styles
 
 
-## 1.0.0-rc 2015-12-12
+## 1.0.0-rc - 2015-12-12
 
 ### Added
 - Add the ability to configure HTMLPurifier via filter options ([#3](https://github.com/Soflomo/Purifier/pull/3/))
@@ -26,11 +35,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - **[BC-BREAK]** Loading the module via `Zend\Loader` is no longer possible. Composer autoloader is now required.
 
 
-## 0.1.1 2013-04-23
+## 0.1.1 - 2013-04-23
 
 ### Changed
 - Composer metadata
 
-## 0.1.0 2013-04-23
+## 0.1.0 - 2013-04-23
 
 **Initial release**
