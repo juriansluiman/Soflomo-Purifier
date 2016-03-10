@@ -27,11 +27,6 @@ class HtmlPurifierConfigFactory
         $config      = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
         $definitions = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [ ];
 
-        if (isset($config['definitions'])) {
-            $definitions  = $config['definitions'];
-            unset($config['definitions']);
-        }
-
         $purifierConfig = self::createConfig($config, $definitions);
 
         return $purifierConfig;
@@ -47,6 +42,11 @@ class HtmlPurifierConfigFactory
      */
     public static function createConfig(array $config, array $definitions = [])
     {
+        if (isset($config['definitions'])) {
+            $definitions  = $config['definitions'];
+            unset($config['definitions']);
+        }
+
         $purifierConfig = HTMLPurifier_Config::create($config);
 
         foreach ($definitions as $type => $methods) {
