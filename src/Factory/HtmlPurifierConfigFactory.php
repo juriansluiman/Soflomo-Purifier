@@ -24,28 +24,29 @@ class HtmlPurifierConfigFactory
             include_once $moduleConfig['standalone_path'];
         }
 
-        $config         = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
-        $purifierConfig = self::createConfig($config);
+        $config      = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
+        $definitions = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [ ];
+
+        if (isset($config['definitions'])) {
+            $definitions  = $config['definitions'];
+            unset($config['definitions']);
+        }
+
+        $purifierConfig = self::createConfig($config, $definitions);
 
         return $purifierConfig;
     }
 
     /**
-     * @param array $config
+     * @param HTMLPurifier_Config $purifierConfig
+     * @param array               $definitions
      *
      * @throws \HTMLPurifier_Exception
      *
      * @return HTMLPurifier_Config
      */
-    public static function createConfig(array $config)
+    public static function createConfig(array $config, array $definitions = [])
     {
-        if (isset($config['definitions'])) {
-            $definitions  = $config['definitions'];
-            unset($config['definitions']);
-        } else {
-            $definitions = [];
-        }
-
         $purifierConfig = HTMLPurifier_Config::create($config);
 
         foreach ($definitions as $type => $methods) {
@@ -56,11 +57,29 @@ class HtmlPurifierConfigFactory
                 continue;
             }
 
-            foreach ($methods as $method => $args) {
-                call_user_func_array([ $definition, $method ], $args);
+            foreach ($methods as $method => $invocations) {
+                $invocations = self::convertSingleInvocationToArray($invocations);
+                foreach ($invocations as $args) {
+                    call_user_func_array([ $definition, $method ], $args);
+                }
             }
         }
 
         return $purifierConfig;
+    }
+
+
+    /**
+     * @param array $invocations
+     *
+     * @return array[]
+     */
+    private static function convertSingleInvocationToArray(array $invocations)
+    {
+        if (count($invocations) === 3) {
+            $invocations = [ $invocations ];
+        }
+
+        return $invocations;
     }
 }
