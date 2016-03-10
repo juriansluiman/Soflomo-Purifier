@@ -76,10 +76,18 @@ class HtmlPurifierConfigFactory
      */
     private static function convertSingleInvocationToArray(array $invocations)
     {
-        if (count($invocations) === 3) {
-            $invocations = [ $invocations ];
+        if (count($invocations) !== 3) {
+            return $invocations;
         }
 
-        return $invocations;
+        $allArgumentsAreArray = array_reduce($invocations, function($carry, $value){
+            return is_array($value) && $carry;
+        }, true);
+
+        if ($allArgumentsAreArray) {
+            return $invocations;
+        }
+
+        return [ $invocations ];
     }
 }
