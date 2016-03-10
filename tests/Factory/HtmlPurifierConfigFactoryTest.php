@@ -231,8 +231,6 @@ class HtmlPurifierConfigFactoryTest extends TestCase
         $this->assertInstanceOf('HTMLPurifier_AttrDef_HTML_Bool', $definition->info['span']->attr['bar']);
     }
 
-
-
     public function testAsManyCustomDefinitionsAsDefinitionArgs()
     {
         $this->setConfigService([

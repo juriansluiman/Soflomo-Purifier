@@ -6,11 +6,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## 1.0.1 - TBD
 
+### Added
+- composer scripts: `check` `test` `cs-check` `cs-fix`.
+
 ### Changed
-- `definitions` config can now be defined as topmost array key in the module configuration;
+- `definitions` config can now be defined as topmost array key in the module configuration.
 
 ### Fixed
-- Multiple definitions can now be configured correctly;
+- Multiple definitions can now be configured correctly.
 
 ## 1.0.0 - 2015-12-17
 

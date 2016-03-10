@@ -53,10 +53,10 @@ class PurifierFilterTest extends TestCase
         $this->filter->setPurifierConfig([
             'HTML.DefinitionID'    => 'custom definitions',
             'Cache.DefinitionImpl' => null,
-            'definitions' => [
+            'definitions'          => [
                 'HTML' => [
                     'addAttribute' => [
-                        'span', 'foo', 'Bool'
+                        'span', 'foo', 'Bool',
                     ],
                 ],
             ],

@@ -68,7 +68,6 @@ class HtmlPurifierConfigFactory
         return $purifierConfig;
     }
 
-
     /**
      * @param array $invocations
      *
@@ -80,7 +79,7 @@ class HtmlPurifierConfigFactory
             return $invocations;
         }
 
-        $allArgumentsAreArray = array_reduce($invocations, function($carry, $value){
+        $allArgumentsAreArray = array_reduce($invocations, function ($carry, $value) {
             return is_array($value) && $carry;
         }, true);
 
