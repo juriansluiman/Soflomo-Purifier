@@ -56,12 +56,12 @@ class PurifierFilterTest extends TestCase
             'definitions'          => [
                 'HTML' => [
                     'addAttribute' => [
-                        'span', 'foo', 'Bool',
+                        [ 'span', 'foo', "Text" ],
                     ],
                 ],
             ],
         ]);
 
-        $this->assertSame('<span foo=""></span>', $this->filter->filter('<span foo></span>'));
+        $this->assertSame('<span foo="bar"></span>', $this->filter->filter('<span foo="bar"></span>'));
     }
 }
