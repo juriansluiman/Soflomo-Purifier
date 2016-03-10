@@ -7,7 +7,9 @@ All notable changes to this project will be documented in this file, in reverse 
 ## 1.0.1 - TBD
 
 ### Added
-- composer scripts: `check` `test` `cs-check` `cs-fix`.
+- composer scripts: `check` `test` `cs-check` `cs-fix`;
+- `composer.lock` file is now committed in;
+- travis build now runs against `lowest`, `locked` and `latest` dependencies. 
 
 ### Changed
 - `definitions` config can now be defined as topmost array key in the module configuration.
