@@ -12,9 +12,6 @@ return array(
     'soflomo_purifier' => [
         'standalone'      => false,
         'standalone_path' => 'vendor/ezyang/htmlpurifier/library/HTMLPurifier.standalone.php',
-        'config'          => [
-            'definitions' => [],
-        ],
     ],
 
     'service_manager' => [

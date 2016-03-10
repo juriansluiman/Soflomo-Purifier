@@ -37,12 +37,13 @@ class HtmlPurifierConfigFactory
      * @param array $config
      * @param array $definitions
      *
-     * @return HTMLPurifier_Config
      * @throws HTMLPurifier_Exception
+     *
+     * @return HTMLPurifier_Config
      */
     public static function createConfig(array $config, array $definitions = [])
     {
-        if (isset($config['definitions'])) {
+        if (! empty($config['definitions'])) {
             $definitions  = $config['definitions'];
             unset($config['definitions']);
         }
