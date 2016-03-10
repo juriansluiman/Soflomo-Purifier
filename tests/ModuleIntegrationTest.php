@@ -86,7 +86,7 @@ class ModuleIntegrationTest extends TestCase
     {
         $app         = Application::init($this->appConfig);
         $inputFilter = new InputFilter();
-        $app->getServiceManager()->get('InputFilterManager')->populateFactory($inputFilter);
+        $app->getServiceManager()->get('InputFilterManager')->populateFactory($inputFilter, null);
 
         $config = [ 'HTML.AllowedElements' => 'a' ];
 
