@@ -47,4 +47,21 @@ class PurifierFilterTest extends TestCase
         $filter  = new PurifierFilter($this->htmlPurifier, $options);
         $this->assertEquals($options, $filter->getOptions());
     }
+
+    public function testFilterWithCustomDefinitions()
+    {
+        $this->filter->setPurifierConfig([
+            'HTML.DefinitionID'    => 'custom definitions',
+            'Cache.DefinitionImpl' => null,
+            'definitions' => [
+                'HTML' => [
+                    'addAttribute' => [
+                        'span', 'foo', 'Bool'
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertSame('<span foo=""></span>', $this->filter->filter('<span foo></span>'));
+    }
 }

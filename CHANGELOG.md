@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.0.1 - TBD
+
+### Changed
+- `definitions` config can now be defined as topmost array key in the module configuration;
+
+### Fixed
+- Multiple definitions can now be configured correctly;
+
 ## 1.0.0 - 2015-12-17
 
 ### Added

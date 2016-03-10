@@ -124,11 +124,11 @@ return [
     'soflomo_purifier' => [
         'config' => [
             'HTML.DefinitionID' => 'my custom definitions',
-            'definitions' => [
-                'HTML' => [
-                    'addAttribute' => [
-                        'a', 'target', 'Enum#_blank,_self,_target,_top'
-                    ],
+        ], 
+        'definitions' => [
+            'HTML' => [
+                'addAttribute' => [
+                    [ 'a', 'target', 'Enum#_blank,_self,_target,_top' ]
                 ],
             ],
         ],
@@ -138,6 +138,8 @@ return [
 
 This will add a `HTMLPurifier_AttrDef_Enum` definition for the `target` attribute of the `a` element.
 Note that an arbitrary value for the `HTML.DefinitionID` config key is required to correctly load the definition.
+
+Definitions can also be set under the `definitions` key in the `config` array. These will override the key in the `soflomo_purifier` array.
 
 #### Per-instance configuration
 
