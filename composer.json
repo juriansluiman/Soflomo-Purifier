@@ -64,5 +64,14 @@
     },
     "bin": [
         "bin/purifier-generate-standalone"
-    ]
+    ],
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "php-cs-fixer --version && php-cs-fixer fix -v --diff --dry-run",
+        "cs-fix": "php-cs-fixer fix -v",
+        "test": "phpunit"
+    }
 }
