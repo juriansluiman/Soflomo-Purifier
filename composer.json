@@ -31,7 +31,7 @@
     "require": {
         "php": ">=5.5",
         "zendframework/zend-filter": "^2.5",
-        "ezyang/htmlpurifier": ">=4.5.0"
+        "ezyang/htmlpurifier": "^4.5"
     },
     "require-dev": {
         "zendframework/zend-servicemanager": "^2.5",
