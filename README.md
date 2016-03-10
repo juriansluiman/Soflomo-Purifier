@@ -1,10 +1,11 @@
 # Soflomo\Purifier
 
-[![Mantainer](https://img.shields.io/badge/mantainer-Stefano%20Torresi-blue.svg?style=flat-square)](https://twitter.com/storresi)
-[![Build Status](https://img.shields.io/travis/juriansluiman/Soflomo-Purifier/master.svg?style=flat-square)](https://travis-ci.org/juriansluiman/Soflomo-Purifier)
-[![Stable Version](https://img.shields.io/packagist/v/soflomo/purifier.svg?style=flat-square)](https://packagist.org/packages/soflomo/purifier)
+[![Mantainer](https://img.shields.io/badge/mantainer-Stefano%20Torresi-green.svg)](https://github.com/stefanotorresi)
+[![Build Status](https://img.shields.io/travis/juriansluiman/Soflomo-Purifier/master.svg)](https://travis-ci.org/juriansluiman/Soflomo-Purifier)
+[![Latest Stable Version](https://poser.pugx.org/soflomo/purifier/v/stable)](https://packagist.org/packages/soflomo/purifier)
 [![License](https://img.shields.io/packagist/l/soflomo/purifier.svg)](LICENSE)
-[![Total Downloads](https://img.shields.io/packagist/dt/soflomo/purifier.svg?style=flat-square)](https://packagist.org/packages/soflomo/purifier)
+[![Total Downloads](https://img.shields.io/packagist/dt/soflomo/purifier.svg)](https://packagist.org/packages/soflomo/purifier)
+
 
 Soflomo\Purifier is the [HTMLPurifier](http://htmlpurifier.org/) integration for Zend Framework 2.
 
