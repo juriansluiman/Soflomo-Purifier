@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.0.1 - TBD
+## 1.0.1 - 2016-03-10
 
 ### Added
 - composer scripts: `check` `test` `cs-check` `cs-fix`;
