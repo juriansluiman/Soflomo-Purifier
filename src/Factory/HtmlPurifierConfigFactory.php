@@ -6,6 +6,7 @@
 namespace Soflomo\Purifier\Factory;
 
 use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 use RuntimeException;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -33,12 +34,11 @@ class HtmlPurifierConfigFactory
     }
 
     /**
-     * @param HTMLPurifier_Config $purifierConfig
-     * @param array               $definitions
-     *
-     * @throws \HTMLPurifier_Exception
+     * @param array $config
+     * @param array $definitions
      *
      * @return HTMLPurifier_Config
+     * @throws HTMLPurifier_Exception
      */
     public static function createConfig(array $config, array $definitions = [])
     {
