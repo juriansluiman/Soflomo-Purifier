@@ -56,7 +56,7 @@ class PurifierFilterTest extends TestCase
             'definitions'          => [
                 'HTML' => [
                     'addAttribute' => [
-                        [ 'span', 'foo', "Text" ],
+                        [ 'span', 'foo', 'Text' ],
                     ],
                 ],
             ],
