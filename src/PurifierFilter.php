@@ -37,7 +37,7 @@ class PurifierFilter extends AbstractFilter implements FilterInterface
     {
         $this->purifier = $purifier;
 
-        if (! empty($options)) {
+        if (!empty($options)) {
             $this->setOptions($options);
         }
     }
