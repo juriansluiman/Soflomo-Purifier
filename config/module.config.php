@@ -8,15 +8,15 @@ namespace Soflomo\Purifier;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
-return array(
+return [
     'soflomo_purifier' => [
-        'standalone'      => false,
+        'standalone' => false,
         'standalone_path' => 'vendor/ezyang/htmlpurifier/library/HTMLPurifier.standalone.php',
     ],
 
     'service_manager' => [
         'factories' => [
-            HTMLPurifier::class        => Factory\HtmlPurifierFactory::class,
+            HTMLPurifier::class => Factory\HtmlPurifierFactory::class,
             HTMLPurifier_Config::class => Factory\HtmlPurifierConfigFactory::class,
         ],
     ],
@@ -38,4 +38,4 @@ return array(
             PurifierViewHelper::ALIAS => PurifierViewHelper::class,
         ],
     ],
-);
+];
