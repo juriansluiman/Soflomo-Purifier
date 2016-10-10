@@ -17,7 +17,7 @@ class HtmlPurifierFactory
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $purifierConfig = $serviceLocator->get(HTMLPurifier_Config::class);
-        $purifier       = new HTMLPurifier($purifierConfig);
+        $purifier = new HTMLPurifier($purifierConfig);
 
         return $purifier;
     }

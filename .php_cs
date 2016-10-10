@@ -49,8 +49,6 @@ $config = Symfony\CS\Config\Config::create()
         'unused_use',
         'whitespacy_lines',
         'concat_with_spaces',
-        'align_equals',
-        'align_double_arrow',
         'concat_with_spaces',
         'ereg_to_preg',
         'newline_after_open_tag',

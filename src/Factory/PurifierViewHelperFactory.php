@@ -5,14 +5,15 @@
 
 namespace Soflomo\Purifier\Factory;
 
+use Interop\Container\ContainerInterface;
 use Soflomo\Purifier\PurifierViewHelper;
-use Zend\View\HelperPluginManager;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
-class PurifierViewHelperFactory
+class PurifierViewHelperFactory implements FactoryInterface
 {
-    public function __invoke(HelperPluginManager $helperPluginManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $htmlPurifier = $helperPluginManager->getServiceLocator()->get('HTMLPurifier');
+        $htmlPurifier = $container->get('HTMLPurifier');
 
         return new PurifierViewHelper($htmlPurifier);
     }

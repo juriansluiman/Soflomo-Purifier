@@ -15,18 +15,18 @@ class HtmlPurifierConfigFactory
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $configService = $serviceLocator->get('config');
-        $moduleConfig  = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : [];
+        $moduleConfig = isset($configService['soflomo_purifier']) ? $configService['soflomo_purifier'] : [];
 
         if ($moduleConfig['standalone']) {
-            if (! file_exists($moduleConfig['standalone_path'])) {
+            if (!file_exists($moduleConfig['standalone_path'])) {
                 throw new RuntimeException('Could not find standalone purifier file');
             }
 
             include_once $moduleConfig['standalone_path'];
         }
 
-        $config      = isset($moduleConfig['config']) ? $moduleConfig['config'] : [ ];
-        $definitions = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [ ];
+        $config = isset($moduleConfig['config']) ? $moduleConfig['config'] : [];
+        $definitions = isset($moduleConfig['definitions']) ? $moduleConfig['definitions'] : [];
 
         $purifierConfig = self::createConfig($config, $definitions);
 
@@ -43,8 +43,8 @@ class HtmlPurifierConfigFactory
      */
     public static function createConfig(array $config, array $definitions = [])
     {
-        if (! empty($config['definitions'])) {
-            $definitions  = $config['definitions'];
+        if (!empty($config['definitions'])) {
+            $definitions = $config['definitions'];
             unset($config['definitions']);
         }
 
@@ -53,7 +53,7 @@ class HtmlPurifierConfigFactory
         foreach ($definitions as $type => $methods) {
             $definition = $purifierConfig->getDefinition($type, true, true);
 
-            if (! $definition) {
+            if (!$definition) {
                 // definition is cached, skip iteration
                 continue;
             }
@@ -61,7 +61,7 @@ class HtmlPurifierConfigFactory
             foreach ($methods as $method => $invocations) {
                 $invocations = self::convertSingleInvocationToArray($invocations);
                 foreach ($invocations as $args) {
-                    call_user_func_array([ $definition, $method ], $args);
+                    call_user_func_array([$definition, $method], $args);
                 }
             }
         }
@@ -88,6 +88,6 @@ class HtmlPurifierConfigFactory
             return $invocations;
         }
 
-        return [ $invocations ];
+        return [$invocations];
     }
 }
