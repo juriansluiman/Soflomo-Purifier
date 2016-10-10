@@ -1,5 +1,5 @@
 {
-    "name": "saeven/zf3-purifier",
+    "name": "soflomo/purifier",
     "description": "HTML Purifier integration module for Zend Framework 3",
     "license": "BSD-3-Clause",
     "type": "library",
