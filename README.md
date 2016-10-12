@@ -223,4 +223,4 @@ return [
 ];
 ```
 
-**Note:** The standalone generator script requires HTMLPurifier to be installed either with version `<4.7.0` or with Composer `--prefer-source` flag, because since that version the maintenance tools were removed from the archive (see [htmlpurifier #65](https://github.com/ezyang/htmlpurifier/pull/65)).
+**Note:** The standalone generator script will not work with HTMLPurifier version `4.7.0` due to an upstream BC break in that specific version. (see [htmlpurifier #65](https://github.com/ezyang/htmlpurifier/pull/65)).
