@@ -159,8 +159,16 @@ class MyInputFilter extends Zend\InputFilter\InputFilter
                 [
                     'name' => 'htmlpurifier',
                     'options' => [
-                        'purifier_config' => [
-                            'HTML.AllowedElements' => 'a, span'
+                        'config' => [
+                            'HTML.AllowedElements' => 'a, span',
+                            'HTML.DefinitionID' => 'my custom definitions',
+                        ], 
+                        'definitions' => [
+                            'HTML' => [
+                                'addAttribute' => [
+                                    [ 'a', 'target', 'Enum#_blank,_self,_target,_top' ]
+                                ],
+                            ],
                         ],
                     ],
                 ],

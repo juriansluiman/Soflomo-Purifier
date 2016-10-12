@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## TBD
+ 
+## Added
+- the on-the-fly filter `definitions` option is now available
+
+### Changed
+- [BC Break] `definitions` config **must** now be defined as topmost array key in the module configuration.
+- [BC Break] the on-the-fly filter `purifier_config` option key has been changed to `config`
+
 ## 1.0.2 - 2016-03-10
 
 ### Fixed
