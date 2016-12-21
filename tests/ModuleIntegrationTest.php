@@ -28,7 +28,7 @@ class ModuleIntegrationTest extends TestCase
                 'Soflomo\Purifier',
                 'Zend\Router',
                 'Zend\Filter',
-                'Zend\InputFilter'
+                'Zend\InputFilter',
             ],
             'module_listener_options' => [],
         ];

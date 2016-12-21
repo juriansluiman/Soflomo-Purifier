@@ -9,9 +9,9 @@ use Interop\Container\ContainerInterface;
 use Soflomo\Purifier\PurifierViewHelper;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class PurifierViewHelperFactory
+class PurifierViewHelperFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null) 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $htmlPurifier = $container->get('HTMLPurifier');
 
