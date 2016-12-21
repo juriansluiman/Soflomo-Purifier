@@ -9,7 +9,7 @@ use Zend\ModuleManager\Feature;
 
 class Module implements Feature\ConfigProviderInterface
 {
-    const VERSION = '2.0.0-beta';
+    const VERSION = '2.0.1-dev';
 
     public function getConfig()
     {
