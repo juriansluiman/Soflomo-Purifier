@@ -1,2 +1,4 @@
 /vendor
 phpunit.xml
+.php_cs*
+!.php_cs.dist
