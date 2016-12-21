@@ -51,7 +51,7 @@
     "suggest": {
         "zendframework/zend-modulemanager": "To load the module in a ZF application",
         "zendframework/zend-servicemanager": "To use the provided DI configuration and factories",
-        "zendframework/zend-view": "To use the purifier as ZF view helper",
+        "zendframework/zend-view": "To use the purifier as ZF view helper"
     },
     "autoload": {
         "psr-4": {
