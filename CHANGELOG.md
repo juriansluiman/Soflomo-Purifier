@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.0.0 - 2016-12-21
+## 2.0.0-beta - 2016-12-21
  
 ### Added
 - the on-the-fly filter `definitions` option is now available
@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file, in reverse 
 - [BC Break] `definitions` config **must** now be defined as topmost array key in the module configuration.
 - [BC Break] the on-the-fly filter `purifier_config` option key has been changed to `config`
 - [BC Break] 2.x branch is now ZF3 compatible.
+- Updated dev dependency `php-cs-fixer` to version 2.0
 
 ## 1.0.2 - 2016-03-10
 
