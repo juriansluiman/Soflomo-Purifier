@@ -99,7 +99,7 @@ class ModuleIntegrationTest extends TestCase
                 [
                     'name'    => 'htmlpurifier',
                     'options' => [
-                        'purifier_config' => $config,
+                        'config' => $config,
                     ],
                 ],
             ],
@@ -109,6 +109,6 @@ class ModuleIntegrationTest extends TestCase
         $filter = $inputFilter->get('test')->getFilterChain()->getFilters()->top();
 
         $this->assertInstanceOf(Purifier\PurifierFilter::class, $filter);
-        $this->assertEquals($config, $filter->getPurifierConfig());
+        $this->assertEquals($config, $filter->getConfig());
     }
 }

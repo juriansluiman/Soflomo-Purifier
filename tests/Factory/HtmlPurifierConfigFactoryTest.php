@@ -69,10 +69,10 @@ class HtmlPurifierConfigFactoryTest extends TestCase
                 'config'     => [
                     'HTML.DefinitionID'    => 'custom definitions',
                     'Cache.DefinitionImpl' => null,
-                    'definitions'          => [
-                        'HTML' => [
-                            'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes)],
-                        ],
+                ],
+                'definitions'          => [
+                    'HTML' => [
+                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes)],
                     ],
                 ],
             ],
@@ -110,10 +110,10 @@ class HtmlPurifierConfigFactoryTest extends TestCase
                 'config'     => [
                     'HTML.DefinitionID'    => 'custom definitions',
                     'Cache.SerializerPath' => $cacheDir,
-                    'definitions'          => [
-                        'HTML' => [
-                            'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum(['asd'])],
-                        ],
+                ],
+                'definitions'          => [
+                    'HTML' => [
+                        'addAttribute' => ['a', 'foo', new HTMLPurifier_AttrDef_Enum(['asd'])],
                     ],
                 ],
             ],
@@ -160,42 +160,6 @@ class HtmlPurifierConfigFactoryTest extends TestCase
     }
 
     public function testFactoryCanSetMultipleDefinitions()
-    {
-        $validAttributes = ['foo','bar','baz','bat'];
-
-        $this->setConfigService([
-            'soflomo_purifier' => [
-                'standalone' => false,
-                'config'     => [
-                    'HTML.DefinitionID'    => 'custom definitions',
-                    'Cache.DefinitionImpl' => null,
-                    'definitions'          => [
-                        'HTML' => [
-                            'addAttribute' => [
-                                [ 'a', 'foo', new HTMLPurifier_AttrDef_Enum($validAttributes) ],
-                                [ 'span', 'bar', 'Bool' ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        /* @var HTMLPurifier_Config $purifier */
-        $purifierConfig = $this->factory->__invoke($this->serviceManager);
-
-        /** @var HTMLPurifier_HTMLDefinition $definition */
-        $definition = $purifierConfig->getDefinition('HTML');
-        $this->assertInstanceOf('HTMLPurifier_HTMLDefinition', $definition);
-
-        $this->assertInstanceOf('HTMLPurifier_ElementDef', $definition->info['a']);
-        $this->assertInstanceOf('HTMLPurifier_AttrDef_Enum', $definition->info['a']->attr['foo']);
-
-        $this->assertInstanceOf('HTMLPurifier_ElementDef', $definition->info['span']);
-        $this->assertInstanceOf('HTMLPurifier_AttrDef_HTML_Bool', $definition->info['span']->attr['bar']);
-    }
-
-    public function testCanUseDefinitionsAsTopModuleConfigArrayKey()
     {
         $validAttributes = ['foo','bar','baz','bat'];
 

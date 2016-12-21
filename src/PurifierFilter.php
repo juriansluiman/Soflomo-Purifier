@@ -24,7 +24,8 @@ class PurifierFilter extends AbstractFilter implements FilterInterface
      * @var array
      */
     protected $options = [
-        'purifier_config' => [],
+        'config'      => [],
+        'definitions' => [],
     ];
 
     /**
@@ -47,30 +48,46 @@ class PurifierFilter extends AbstractFilter implements FilterInterface
      */
     public function filter($value)
     {
-        $configArray = $this->getPurifierConfig();
+        $configArray = $this->getConfig();
 
-        if (empty($configArray)) {
-            return $this->purifier->purify($value);
+        if (! empty($configArray)) {
+            $config = HtmlPurifierConfigFactory::createConfig($configArray, $this->getDefinitions());
+
+            return $this->purifier->purify($value, $config);
         }
 
-        $purifierConfig = HtmlPurifierConfigFactory::createConfig($configArray);
-
-        return $this->purifier->purify($value, $purifierConfig);
+        return $this->purifier->purify($value);
     }
 
     /**
      * @return array
      */
-    public function getPurifierConfig()
+    public function getConfig()
     {
-        return $this->options['purifier_config'];
+        return $this->options['config'];
     }
 
     /**
      * @param array $config
      */
-    public function setPurifierConfig(array $config)
+    public function setConfig(array $config)
     {
-        $this->options['purifier_config'] = $config;
+        $this->options['config'] = $config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefinitions()
+    {
+        return $this->options['definitions'];
+    }
+
+    /**
+     * @param array $definitions
+     */
+    public function setDefinitions(array $definitions)
+    {
+        $this->options['definitions'] = $definitions;
     }
 }

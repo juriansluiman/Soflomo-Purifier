@@ -43,11 +43,6 @@ class HtmlPurifierConfigFactory
      */
     public static function createConfig(array $config, array $definitions = [])
     {
-        if (! empty($config['definitions'])) {
-            $definitions  = $config['definitions'];
-            unset($config['definitions']);
-        }
-
         $purifierConfig = HTMLPurifier_Config::create($config);
 
         foreach ($definitions as $type => $methods) {

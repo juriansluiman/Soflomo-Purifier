@@ -34,7 +34,7 @@ class PurifierFilterTest extends TestCase
 
         $this->assertSame('<p><a>foobar</a></p>', $this->filter->filter($value));
 
-        $this->filter->setPurifierConfig([
+        $this->filter->setConfig([
             'HTML.AllowedElements' => 'a',
         ]);
 
@@ -43,21 +43,34 @@ class PurifierFilterTest extends TestCase
 
     public function testOptionsCanBeInitializedWithConstructor()
     {
-        $options = [ 'purifier_config' => [ 'HTML.AllowedElements' => 'a' ] ];
+        $options = [
+            'config' => [
+                'HTML.AllowedElements' => 'a',
+                'HTML.DefinitionID'    => 'custom definitions',
+                'Cache.DefinitionImpl' => null,
+            ],
+            'definitions' => [
+                'HTML' => [
+                    'addAttribute' => [
+                        [ 'span', 'foo', 'Text' ],
+                    ],
+                ],
+            ],
+        ];
         $filter  = new PurifierFilter($this->htmlPurifier, $options);
         $this->assertEquals($options, $filter->getOptions());
     }
 
     public function testFilterWithCustomDefinitions()
     {
-        $this->filter->setPurifierConfig([
+        $this->filter->setConfig([
             'HTML.DefinitionID'    => 'custom definitions',
             'Cache.DefinitionImpl' => null,
-            'definitions'          => [
-                'HTML' => [
-                    'addAttribute' => [
-                        [ 'span', 'foo', 'Text' ],
-                    ],
+        ]);
+        $this->filter->setDefinitions([
+            'HTML' => [
+                'addAttribute' => [
+                    [ 'span', 'foo', 'Text' ],
                 ],
             ],
         ]);
