@@ -7,7 +7,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/soflomo/purifier.svg)](https://packagist.org/packages/soflomo/purifier)
 
 
-Soflomo\Purifier is the [HTMLPurifier](http://htmlpurifier.org/) integration for Zend Framework 2.
+Soflomo\Purifier is the [HTMLPurifier](http://htmlpurifier.org/) integration for Zend Framework.
 
 It provides a `Zend\Filter\FilterInterface` implementation so you can use HTMLPurifier within your `Zend\InputFilter` classes.
 Furthermore, a view helper is provided to help purifying html on the fly in view scripts.
