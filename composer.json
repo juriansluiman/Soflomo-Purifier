@@ -49,9 +49,9 @@
         "friendsofphp/php-cs-fixer": "^2.0"
     },
     "suggest": {
-        "zendframework/zend-servicemanager": "For creating the filter with the SM factory",
-        "zendframework/zend-view": "For using the purifier as view helper",
-        "zendframework/zend-modulemanager": "To load the filter as a module in a ZF2 application"
+        "zendframework/zend-modulemanager": "To load the module in a ZF application",
+        "zendframework/zend-servicemanager": "To use the provided DI configuration and factories",
+        "zendframework/zend-view": "To use the purifier as ZF view helper",
     },
     "autoload": {
         "psr-4": {
