@@ -26,6 +26,9 @@ class ModuleIntegrationTest extends TestCase
         $this->appConfig      = [
             'modules' => [
                 'Soflomo\Purifier',
+                'Zend\Router',
+                'Zend\Filter',
+                'Zend\InputFilter'
             ],
             'module_listener_options' => [],
         ];
