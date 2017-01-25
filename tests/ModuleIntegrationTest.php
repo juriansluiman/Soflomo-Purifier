@@ -63,12 +63,12 @@ class ModuleIntegrationTest extends TestCase
         $filterManager = $app->getServiceManager()->get('FilterManager');
 
         $this->assertTrue($filterManager->has(Purifier\PurifierFilter::class));
-        $this->assertTrue($filterManager->has(Purifier\PurifierFilter::ALIAS));
+        $this->assertTrue($filterManager->has('htmlpurifier'));
 
         $purifierFilter = $filterManager->get(Purifier\PurifierFilter::class);
 
         $this->assertInstanceOf(Purifier\PurifierFilter::class, $purifierFilter);
-        $this->assertEquals($purifierFilter, $filterManager->get(Purifier\PurifierFilter::ALIAS));
+        $this->assertEquals($purifierFilter, $filterManager->get('htmlpurifier'));
     }
 
     public function testViewHelperIsRegistered()
@@ -77,12 +77,12 @@ class ModuleIntegrationTest extends TestCase
         $viewHelperManager = $app->getServiceManager()->get('ViewHelperManager');
 
         $this->assertTrue($viewHelperManager->has(Purifier\PurifierViewHelper::class));
-        $this->assertTrue($viewHelperManager->has(Purifier\PurifierViewHelper::ALIAS));
+        $this->assertTrue($viewHelperManager->has('htmlPurifier'));
 
         $purifierViewHelper = $viewHelperManager->get(Purifier\PurifierViewHelper::class);
 
         $this->assertInstanceOf(Purifier\PurifierViewHelper::class, $purifierViewHelper);
-        $this->assertEquals($purifierViewHelper, $viewHelperManager->get(Purifier\PurifierViewHelper::ALIAS));
+        $this->assertEquals($purifierViewHelper, $viewHelperManager->get('htmlPurifier'));
     }
 
     public function testFilterConfigCanBeInitializedByZendInputFilterFactory()

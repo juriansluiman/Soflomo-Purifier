@@ -13,8 +13,6 @@ use Zend\Filter\FilterInterface;
 
 class PurifierFilter extends AbstractFilter implements FilterInterface
 {
-    const ALIAS = 'htmlpurifier';
-
     /**
      * @var HTMLPurifier
      */
