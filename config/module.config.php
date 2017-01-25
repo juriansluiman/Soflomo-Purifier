@@ -26,7 +26,7 @@ return array(
             PurifierFilter::class => Factory\PurifierFilterFactory::class,
         ],
         'aliases' => [
-            PurifierFilter::ALIAS => PurifierFilter::class,
+            'htmlpurifier' => PurifierFilter::class,
         ],
     ],
 
@@ -35,7 +35,7 @@ return array(
             PurifierViewHelper::class => Factory\PurifierViewHelperFactory::class,
         ],
         'aliases' => [
-            PurifierViewHelper::ALIAS => PurifierViewHelper::class,
+            'htmlPurifier' => PurifierViewHelper::class,
         ],
     ],
 );
