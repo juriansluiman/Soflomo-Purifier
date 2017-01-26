@@ -10,8 +10,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class PurifierViewHelper extends AbstractHelper
 {
-    const ALIAS = 'htmlPurifier';
-
     /**
      * @var HTMLPurifier
      */
